@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/part_of_speech_induction.iml" filepath="$PROJECT_DIR$/.idea/part_of_speech_induction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pos_induction.iml" filepath="$PROJECT_DIR$/.idea/pos_induction.iml" />
     </modules>
   </component>
 </project>
