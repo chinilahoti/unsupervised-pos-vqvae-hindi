@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9f74c6-6fd8-4f06-b459-62bc1b2c8bf4" name="Changes" comment="fixed encoders.py to only have FFN code" />
+    <list default="true" id="2a9f74c6-6fd8-4f06-b459-62bc1b2c8bf4" name="Changes" comment="everything should be fixed by now">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readmeeventually.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -156,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758148395737</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="everything should be fixed by now">
+      <option name="closed" value="true" />
+      <created>1758148445216</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1758148445216</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -165,6 +177,7 @@
     <MESSAGE value="Reorganized files" />
     <MESSAGE value="test files" />
     <MESSAGE value="fixed encoders.py to only have FFN code" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed encoders.py to only have FFN code" />
+    <MESSAGE value="everything should be fixed by now" />
+    <option name="LAST_COMMIT_MESSAGE" value="everything should be fixed by now" />
   </component>
 </project>
