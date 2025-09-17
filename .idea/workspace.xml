@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9f74c6-6fd8-4f06-b459-62bc1b2c8bf4" name="Changes" comment="Reorganized files">
-      <change afterPath="$PROJECT_DIR$/tests/run_tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_data_utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_integration.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_models.py" afterDir="false" />
+    <list default="true" id="2a9f74c6-6fd8-4f06-b459-62bc1b2c8bf4" name="Changes" comment="test files">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/models/encoders.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/encoders.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -61,6 +63,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "/Users/chinilahoti/PycharmProjects/linguistics study projects/unsupervised-pos-vqvae-hindi",
@@ -86,8 +89,9 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -132,13 +136,22 @@
       <option name="project" value="LOCAL" />
       <updated>1758139546828</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="test files">
+      <option name="closed" value="true" />
+      <created>1758140870121</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1758140870121</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Adapted all the relevant code to the project from colab notebook" />
     <MESSAGE value="Reorganized files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reorganized files" />
+    <MESSAGE value="test files" />
+    <option name="LAST_COMMIT_MESSAGE" value="test files" />
   </component>
 </project>
