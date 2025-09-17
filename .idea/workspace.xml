@@ -4,39 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9f74c6-6fd8-4f06-b459-62bc1b2c8bf4" name="Changes" comment="Adapted all the relevant code to the project from colab notebook">
-      <change afterPath="$PROJECT_DIR$/data/hi_hdtb-ud-dev.conllu" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/hi_hdtb-ud-test.conllu" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/hi_hdtb-ud-train.conllu" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pos_inductor/__init__.py" afterDir="false" />
+    <list default="true" id="2a9f74c6-6fd8-4f06-b459-62bc1b2c8bf4" name="Changes" comment="Reorganized files">
       <change afterPath="$PROJECT_DIR$/tests/run_tests.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/tests/test_config.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/tests/test_data_utils.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/tests/test_integration.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/tests/test_models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/config/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/config/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/data/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/data/data_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/tokenizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/data/tokenizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/experiments/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/experiment_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/experiments/experiment_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/codebook.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/codebook.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/decoders.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/decoders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/embeddings.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/embeddings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/encoders.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/encoders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/tagging_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/tagging_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/training/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/training/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/training/trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/data_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/utils/data_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/utils/metrics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/utils/visualization.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,12 +225,21 @@
       <option name="project" value="LOCAL" />
       <updated>1758135310864</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Reorganized files">
+      <option name="closed" value="true" />
+      <created>1758139546828</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1758139546828</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Adapted all the relevant code to the project from colab notebook" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adapted all the relevant code to the project from colab notebook" />
+    <MESSAGE value="Reorganized files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reorganized files" />
   </component>
 </project>
