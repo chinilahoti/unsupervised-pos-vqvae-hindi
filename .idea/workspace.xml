@@ -4,10 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9f74c6-6fd8-4f06-b459-62bc1b2c8bf4" name="Changes" comment="test files">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="2a9f74c6-6fd8-4f06-b459-62bc1b2c8bf4" name="Changes" comment="fixed encoders.py to only have FFN code">
+      <change afterPath="$PROJECT_DIR$/.idea/pos_induction.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pos_inductor/models/encoders.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/encoders.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/experiments/experiment_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/experiments/experiment_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/models/embeddings.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/embeddings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/models/tagging_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/models/tagging_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/training/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/training/evaluator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/training/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/training/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/utils/data_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/utils/data_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/utils/metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/utils/metrics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pos_inductor/utils/visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/pos_inductor/utils/visualization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +77,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "/Users/chinilahoti/PycharmProjects/linguistics study projects/unsupervised-pos-vqvae-hindi",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -144,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758140870121</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fixed encoders.py to only have FFN code">
+      <option name="closed" value="true" />
+      <created>1758141563742</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1758141563742</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -152,6 +170,7 @@
     <MESSAGE value="Adapted all the relevant code to the project from colab notebook" />
     <MESSAGE value="Reorganized files" />
     <MESSAGE value="test files" />
-    <option name="LAST_COMMIT_MESSAGE" value="test files" />
+    <MESSAGE value="fixed encoders.py to only have FFN code" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed encoders.py to only have FFN code" />
   </component>
 </project>

@@ -9,8 +9,8 @@ from typing import Tuple, Optional, Dict
 
 class TaggingModel(nn.Module):
     """Main POS tagging model with discrete representation learning."""
-    
-    def __init__(self, 
+
+    def __init__(self,
                  config,
                  embeddings,
                  encoder,
@@ -40,7 +40,8 @@ class TaggingModel(nn.Module):
         self.char_decoder = char_decoder
         self.loss_fn = nn.CrossEntropyLoss(ignore_index=-100)
 
-    def _calculate_diversity_loss(self, label_probs: torch.Tensor, word_mask: torch.Tensor, device: torch.device) -> torch.Tensor:
+    def _calculate_diversity_loss(self, label_probs: torch.Tensor, word_mask: torch.Tensor,
+                                  device: torch.device) -> torch.Tensor:
         """
         Calculate diversity loss to prevent codebook collapse.
         
@@ -71,10 +72,10 @@ class TaggingModel(nn.Module):
 
         return diversity_loss
 
-    def _create_char_targets(self, 
-                           char_ids: torch.Tensor, 
-                           char_word_ids: torch.Tensor, 
-                           char2index: Dict[str, int]) -> Tuple[torch.Tensor, torch.Tensor]:
+    def _create_char_targets(self,
+                             char_ids: torch.Tensor,
+                             char_word_ids: torch.Tensor,
+                             char2index: Dict[str, int]) -> Tuple[torch.Tensor, torch.Tensor]:
         """
         Convert flat character sequences to word-aligned character targets.
         
@@ -105,7 +106,7 @@ class TaggingModel(nn.Module):
                 char_id_val = char_id.item()
 
                 # Skip padding tokens and invalid word indices
-                if (word_id_val >= W or char_id_val == char2index.get("PAD", -100)):
+                if word_id_val >= W or char_id_val == char2index.get("PAD", -100):
                     continue
 
                 # Initialize position counter for this word
@@ -122,14 +123,15 @@ class TaggingModel(nn.Module):
 
         return target_chars, char_mask
 
-    def forward(self, 
-               char_ids: Optional[torch.Tensor],
-               char_word_ids: Optional[torch.Tensor],
-               token_ids: torch.Tensor,
-               token_word_ids: torch.Tensor,
-               attention_mask: torch.Tensor,
-               special_tokens_mask: torch.Tensor,
-               device: torch.device) -> Tuple[torch.Tensor, torch.Tensor, Optional[torch.Tensor], torch.Tensor, torch.Tensor]:
+    def forward(self,
+                char_ids: Optional[torch.Tensor],
+                char_word_ids: Optional[torch.Tensor],
+                token_ids: torch.Tensor,
+                token_word_ids: torch.Tensor,
+                attention_mask: torch.Tensor,
+                special_tokens_mask: torch.Tensor,
+                device: torch.device) -> Tuple[
+        torch.Tensor, torch.Tensor, Optional[torch.Tensor], torch.Tensor, torch.Tensor]:
         """
         Forward pass of the tagging model.
         
@@ -138,20 +140,20 @@ class TaggingModel(nn.Module):
         """
         # Get word embeddings
         word_embeddings, word_level_mask = self.embeddings(
-            char_ids, char_word_ids, token_ids, token_word_ids, 
+            char_ids, char_word_ids, token_ids, token_word_ids,
             attention_mask, special_tokens_mask, device
         )
-        
+
         # Encode to tag logits
         enc_logits = self.encoder(word_embeddings)  # shape: [B, W, num_tag]
-        
+
         # Get discrete representations via codebook
         quantized, weights = self.codebook(enc_logits, self.config.gumbel_temperature)
-        
+
         # Decode to vocabulary
         word_logits = self.vocab_decoder(quantized)  # shape: [B, W, vocab_size]
         word_logprobs = F.log_softmax(word_logits, dim=-1)
-        
+
         # Character decoding (optional)
         char_seq_logprobs = None
         if self.char_decoder is not None:
@@ -163,15 +165,16 @@ class TaggingModel(nn.Module):
         return label_logprobs, word_logprobs, char_seq_logprobs, word_level_mask, weights
 
     def compute_loss(self,
-                    token_ids: torch.Tensor,
-                    token_word_ids: torch.Tensor,
-                    attention_mask: torch.Tensor,
-                    special_tokens_mask: torch.Tensor,
-                    vocab_ids: torch.Tensor,
-                    char_ids: Optional[torch.Tensor] = None,
-                    char_word_ids: Optional[torch.Tensor] = None,
-                    char2index: Optional[Dict[str, int]] = None,
-                    device: torch.device = None) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+                     token_ids: torch.Tensor,
+                     token_word_ids: torch.Tensor,
+                     attention_mask: torch.Tensor,
+                     special_tokens_mask: torch.Tensor,
+                     vocab_ids: torch.Tensor,
+                     char_ids: Optional[torch.Tensor] = None,
+                     char_word_ids: Optional[torch.Tensor] = None,
+                     char2index: Optional[Dict[str, int]] = None,
+                     device: torch.device = None) -> Tuple[
+        torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Compute unsupervised loss for training.
         
@@ -183,7 +186,7 @@ class TaggingModel(nn.Module):
 
         # Forward pass
         label_probs, word_probs, char_probs, word_mask, pred_tags = self.forward(
-            char_ids, char_word_ids, token_ids, token_word_ids, 
+            char_ids, char_word_ids, token_ids, token_word_ids,
             attention_mask, special_tokens_mask, device
         )
 
@@ -200,33 +203,33 @@ class TaggingModel(nn.Module):
         char_reconstr = torch.tensor(0.0, device=device)
         if self.char_decoder is not None and char_ids is not None and char2index is not None:
             target_chars, char_mask = self._create_char_targets(char_ids, char_word_ids, char2index)
-            
+
             # Flatten for loss calculation
             char_probs_flat = einops.rearrange(char_probs, 'B W C A -> (B W C) A')
             target_chars_flat = einops.rearrange(target_chars, 'B W C -> (B W C)')
             char_mask_flat = einops.rearrange(char_mask, 'B W C -> (B W C)')
-            
+
             # Apply mask: set padded positions to ignore_index
             masked_char_targets = torch.where(char_mask_flat, target_chars_flat, -100)
             char_reconstr = self.loss_fn(char_probs_flat, masked_char_targets)
 
         # 4. Combined total loss
         total_loss = (
-            (self.config.vocab_loss_weight * vocab_reconstr) +
-            (self.config.diversity_weight * div_loss) +
-            (self.config.char_loss_weight * char_reconstr)
+                (self.config.vocab_loss_weight * vocab_reconstr) +
+                (self.config.diversity_weight * div_loss) +
+                (self.config.char_loss_weight * char_reconstr)
         )
 
         return total_loss, vocab_reconstr, char_reconstr, div_loss, pred_tags
 
     def predict_tags(self,
-                    token_ids: torch.Tensor,
-                    token_word_ids: torch.Tensor,
-                    attention_mask: torch.Tensor,
-                    special_tokens_mask: torch.Tensor,
-                    char_ids: Optional[torch.Tensor] = None,
-                    char_word_ids: Optional[torch.Tensor] = None,
-                    device: torch.device = None) -> torch.Tensor:
+                     token_ids: torch.Tensor,
+                     token_word_ids: torch.Tensor,
+                     attention_mask: torch.Tensor,
+                     special_tokens_mask: torch.Tensor,
+                     char_ids: Optional[torch.Tensor] = None,
+                     char_word_ids: Optional[torch.Tensor] = None,
+                     device: torch.device = None) -> torch.Tensor:
         """
         Predict tags for input sequences.
         
@@ -235,7 +238,7 @@ class TaggingModel(nn.Module):
         """
         if device is None:
             device = token_ids.device
-            
+
         with torch.no_grad():
             label_logprobs, _, _, _, weights = self.forward(
                 char_ids, char_word_ids, token_ids, token_word_ids,

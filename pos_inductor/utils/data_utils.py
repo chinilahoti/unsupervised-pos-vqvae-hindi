@@ -78,12 +78,12 @@ def extract_vocabulary_and_chars(sentences: List[List[Tuple[str, str]]]) -> Tupl
     """
     vocabulary = [word for sentence in sentences for word, _ in sentence]
     unique_chars = list(set(' '.join(vocabulary)))
-    
+
     return vocabulary, unique_chars
 
 
-def prepare_data_indices(train_sents: List[List[Tuple[str, str]]], 
-                        train_labels: Set[str]) -> Tuple[Dict, Dict, Dict, Dict, Dict, Dict]:
+def prepare_data_indices(train_sents: List[List[Tuple[str, str]]],
+                         train_labels: Set[str]) -> Tuple[Dict, Dict, Dict, Dict, Dict, Dict]:
     """
     Prepare all indexing dictionaries for the dataset.
     
@@ -95,9 +95,9 @@ def prepare_data_indices(train_sents: List[List[Tuple[str, str]]],
         Tuple of (l2i, i2l, v2i, i2v, c2i, i2c) dictionaries
     """
     vocabulary, unique_chars = extract_vocabulary_and_chars(train_sents)
-    
+
     l2i, i2l = item_indexer(train_labels, labels=True)
     v2i, i2v = item_indexer(vocabulary, labels=False)
     c2i, i2c = item_indexer(unique_chars, labels=False)
-    
+
     return l2i, i2l, v2i, i2v, c2i, i2c

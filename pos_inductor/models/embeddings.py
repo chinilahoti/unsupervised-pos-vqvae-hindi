@@ -9,7 +9,7 @@ from transformers import AutoModel
 
 class Embeddings(nn.Module):
     """Combined character and BERT embeddings."""
-    
+
     def __init__(self, num_chars: int, config, bert_model: AutoModel, num_layers: int = 1):
         """
         Initialize embedding layers.
@@ -34,7 +34,8 @@ class Embeddings(nn.Module):
         self.wemb = nn.LSTM(self.E, self.R, num_layers, batch_first=True)
         self.linear = nn.Linear(self.R, self.H)
 
-    def _char_embeddings(self, char_ids: torch.Tensor, char_word_ids: torch.Tensor, device: torch.device) -> torch.Tensor:
+    def _char_embeddings(self, char_ids: torch.Tensor, char_word_ids: torch.Tensor,
+                         device: torch.device) -> torch.Tensor:
         """
         Generate character-based word embeddings.
         
@@ -63,12 +64,12 @@ class Embeddings(nn.Module):
 
         return self.linear(word_repr)  # shape: [B, W, H]
 
-    def _bert_embeddings(self, 
-                        token_ids: torch.Tensor, 
-                        token_word_ids: torch.Tensor, 
-                        attention_mask: torch.Tensor, 
-                        special_tokens_mask: torch.Tensor,
-                        device: torch.device) -> torch.Tensor:
+    def _bert_embeddings(self,
+                         token_ids: torch.Tensor,
+                         token_word_ids: torch.Tensor,
+                         attention_mask: torch.Tensor,
+                         special_tokens_mask: torch.Tensor,
+                         device: torch.device) -> torch.Tensor:
         """
         Generate BERT-based word embeddings.
         
@@ -87,7 +88,7 @@ class Embeddings(nn.Module):
         ).to(dtype=torch.float32, device=device)  # shape: [B, T, W]
 
         embeddings = self.bert_model(
-            input_ids=token_ids, 
+            input_ids=token_ids,
             attention_mask=attention_mask
         )
         last_hidden_state = embeddings.last_hidden_state.to(device)  # shape: [B, T, H]
@@ -102,30 +103,30 @@ class Embeddings(nn.Module):
         for batch_idx in range(last_hidden_state.size(0)):
             seq_content_mask = content_mask[batch_idx].bool()
             seq_content_embeddings = last_hidden_state[batch_idx][seq_content_mask]
-            
+
             content_embeddings.append(seq_content_embeddings)
             content_lengths.append(seq_content_embeddings.size(0))
 
         # Pad content embeddings for batching
         padded_content_embeddings = torch.zeros(
-            len(content_embeddings), 
-            self.config.max_tok_len, 
+            len(content_embeddings),
+            self.config.max_tok_len,
             last_hidden_state.size(-1)
         ).to(device)
-        
+
         for i, (emb, length) in enumerate(zip(content_embeddings, content_lengths)):
             padded_content_embeddings[i, :length] = emb
 
         return torch.einsum('BTH,BTW->BWH', padded_content_embeddings, token2word_mapping)
 
-    def forward(self, 
-               char_ids: torch.Tensor, 
-               char_word_ids: torch.Tensor, 
-               token_ids: torch.Tensor, 
-               token_word_ids: torch.Tensor, 
-               attention_mask: torch.Tensor, 
-               special_tokens_mask: torch.Tensor,
-               device: torch.device) -> tuple:
+    def forward(self,
+                char_ids: torch.Tensor,
+                char_word_ids: torch.Tensor,
+                token_ids: torch.Tensor,
+                token_word_ids: torch.Tensor,
+                attention_mask: torch.Tensor,
+                special_tokens_mask: torch.Tensor,
+                device: torch.device) -> tuple:
         """
         Forward pass combining BERT and character embeddings.
         
@@ -135,7 +136,7 @@ class Embeddings(nn.Module):
         bert_embeds = self._bert_embeddings(
             token_ids, token_word_ids, attention_mask, special_tokens_mask, device
         )
-        
+
         if self.config.use_char_architecture and char_ids is not None:
             char_embeds = self._char_embeddings(char_ids, char_word_ids, device)
         else:

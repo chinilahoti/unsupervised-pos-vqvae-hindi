@@ -10,7 +10,7 @@ from collections import defaultdict
 
 class Evaluator:
     """Evaluator class for the POS tagging model."""
-    
+
     def __init__(self, model, config, device: torch.device, char2index: Optional[Dict[str, int]] = None):
         """
         Initialize evaluator.
@@ -26,11 +26,11 @@ class Evaluator:
         self.device = device
         self.char2index = char2index
 
-    def evaluate(self, 
-                dataloader: DataLoader,
-                label2index: Optional[Dict[str, int]] = None,
-                index2label: Optional[Dict[int, str]] = None,
-                mode: str = 'test') -> Dict:
+    def evaluate(self,
+                 dataloader: DataLoader,
+                 label2index: Optional[Dict[str, int]] = None,
+                 index2label: Optional[Dict[int, str]] = None,
+                 mode: str = 'test') -> Dict:
         """
         Evaluate model performance.
         
@@ -51,7 +51,7 @@ class Evaluator:
         word_tag_counts_dict = {i: {} for i in range(self.config.num_tag)}
         count_dict = None
         if label2index is not None:
-            count_dict = {i: {j+1: 0 for j in range(len(label2index))} for i in range(self.config.num_tag)}
+            count_dict = {i: {j + 1: 0 for j in range(len(label2index))} for i in range(self.config.num_tag)}
 
         with torch.no_grad():
             for batch in tqdm.tqdm(dataloader, desc=f"Evaluating ({mode})"):
@@ -61,19 +61,20 @@ class Evaluator:
                 attention_mask = batch['attention_mask'].to(self.device)
                 special_tokens_mask = batch['spec_tok_mask'].to(self.device)
                 vocab_ids = batch['vocab_ids'].to(self.device)
-                
+
                 char_ids = None
                 char_word_ids = None
                 if self.config.use_char_architecture:
                     char_ids = batch['char_ids'].to(self.device) if batch['char_ids'] is not None else None
-                    char_word_ids = batch['char_word_ids'].to(self.device) if batch['char_word_ids'] is not None else None
+                    char_word_ids = batch['char_word_ids'].to(self.device) if batch[
+                                                                                  'char_word_ids'] is not None else None
 
                 # Compute loss and predictions
                 loss, vocab_reconstr, char_reconstr, div_loss, tag_logits = self.model.compute_loss(
                     token_ids, token_word_ids, attention_mask, special_tokens_mask,
                     vocab_ids, char_ids, char_word_ids, self.char2index, self.device
                 )
-                
+
                 predicted = torch.argmax(tag_logits, -1)
                 total_loss += loss.item()
                 num_batches += 1
@@ -81,7 +82,7 @@ class Evaluator:
                 # Analyze predictions for test mode
                 if mode == 'test':
                     self._collect_word_tag_counts(vocab_ids, predicted, word_tag_counts_dict)
-                    
+
                     # Supervised evaluation if labels available
                     if label2index is not None and 'labels' in batch:
                         labels = batch['labels'].to(self.device)
@@ -100,7 +101,7 @@ class Evaluator:
         if mode == 'test' and label2index is not None and count_dict is not None:
             m1_dict, pred_to_m1 = self._many_to_one_mapping(count_dict, label2index, index2label)
             m1_accuracy = self._calculate_m1_accuracy(m1_dict)
-            
+
             results.update({
                 'count_dict': count_dict,
                 'm1_dict': m1_dict,
@@ -138,17 +139,17 @@ class Evaluator:
                 if gold_tag != -100:
                     count_dict[pred_tag][gold_tag] = count_dict[pred_tag].get(gold_tag, 0) + 1
 
-    def _many_to_one_mapping(self, 
-                           count_dict: Dict, 
-                           label2index: Dict[str, int], 
-                           index2label: Dict[int, str]) -> Tuple[Dict, Dict]:
+    def _many_to_one_mapping(self,
+                             count_dict: Dict,
+                             label2index: Dict[str, int],
+                             index2label: Dict[int, str]) -> Tuple[Dict, Dict]:
         """
         Create many-to-one mapping from predicted tags to gold labels.
         
         Returns:
             Tuple of (m1_dict, pred_to_m1_mapping)
         """
-        m1_dict = {i+1: [] for i in range(len(label2index))}
+        m1_dict = {i + 1: [] for i in range(len(label2index))}
         pred_to_m1 = {i: 0 for i in range(self.config.num_tag)}
 
         for pred, gold_counts in count_dict.items():
@@ -168,7 +169,7 @@ class Evaluator:
                         totals[label_name] = v
                     else:
                         totals[label_name] += v
-            
+
             m1_totals[index2label[m1_tag]] = totals
 
         return m1_totals, pred_to_m1
@@ -177,7 +178,7 @@ class Evaluator:
         """Calculate many-to-one accuracy."""
         correct = 0
         total = 0
-        
+
         for k, count_dict in m1_totals.items():
             if k in count_dict:
                 correct += count_dict[k]
@@ -186,9 +187,9 @@ class Evaluator:
         accuracy = (correct / total) * 100 if total > 0 else 0
         return accuracy
 
-    def predict_sequences(self, 
-                         dataloader: DataLoader,
-                         index2label: Optional[Dict[int, str]] = None) -> List[List[str]]:
+    def predict_sequences(self,
+                          dataloader: DataLoader,
+                          index2label: Optional[Dict[int, str]] = None) -> List[List[str]]:
         """
         Predict tag sequences for input data.
         
@@ -208,12 +209,13 @@ class Evaluator:
                 token_word_ids = batch['token_word_ids'].to(self.device)
                 attention_mask = batch['attention_mask'].to(self.device)
                 special_tokens_mask = batch['spec_tok_mask'].to(self.device)
-                
+
                 char_ids = None
                 char_word_ids = None
                 if self.config.use_char_architecture:
                     char_ids = batch['char_ids'].to(self.device) if batch['char_ids'] is not None else None
-                    char_word_ids = batch['char_word_ids'].to(self.device) if batch['char_word_ids'] is not None else None
+                    char_word_ids = batch['char_word_ids'].to(self.device) if batch[
+                                                                                  'char_word_ids'] is not None else None
 
                 predictions = self.model.predict_tags(
                     token_ids, token_word_ids, attention_mask, special_tokens_mask,
@@ -222,7 +224,7 @@ class Evaluator:
 
                 # Convert to numpy and process
                 predictions_np = predictions.cpu().numpy()
-                
+
                 for seq_preds in predictions_np:
                     if index2label is not None:
                         # Convert to label names (for M1 mapping)
@@ -230,7 +232,7 @@ class Evaluator:
                     else:
                         # Keep as tag indices
                         seq_labels = [f'TAG_{pred}' for pred in seq_preds]
-                    
+
                     all_predictions.append(seq_labels)
 
         return all_predictions
@@ -251,30 +253,31 @@ class Evaluator:
                 token_word_ids = batch['token_word_ids'].to(self.device)
                 attention_mask = batch['attention_mask'].to(self.device)
                 special_tokens_mask = batch['spec_tok_mask'].to(self.device)
-                
+
                 char_ids = None
                 char_word_ids = None
                 if self.config.use_char_architecture:
                     char_ids = batch['char_ids'].to(self.device) if batch['char_ids'] is not None else None
-                    char_word_ids = batch['char_word_ids'].to(self.device) if batch['char_word_ids'] is not None else None
+                    char_word_ids = batch['char_word_ids'].to(self.device) if batch[
+                                                                                  'char_word_ids'] is not None else None
 
                 _, _, _, _, weights = self.model.forward(
                     char_ids, char_word_ids, token_ids, token_word_ids,
                     attention_mask, special_tokens_mask, self.device
                 )
-                
+
                 all_weights.append(weights.cpu())
 
         # Combine all weights
         all_weights = torch.cat(all_weights, dim=0)  # [total_samples, W, num_tag]
-        
+
         # Calculate usage statistics
         usage_per_tag = all_weights.mean(dim=(0, 1))  # [num_tag]
         entropy = -(all_weights * torch.log(all_weights + 1e-8)).sum(dim=-1).mean()
-        
+
         # Find most/least used tags
         sorted_usage = torch.argsort(usage_per_tag, descending=True)
-        
+
         return {
             'usage_per_tag': usage_per_tag.numpy(),
             'entropy': entropy.item(),
