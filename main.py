@@ -2,10 +2,9 @@
 
 import argparse
 import os
-from pathlib import Path
 
-from config.config import Config, ExperimentConfig
-from experiments.experiment_runner import ExperimentRunner
+from pos_inductor.config import Config, ExperimentConfig
+from pos_inductor.experiments import ExperimentRunner
 
 
 def main():
